@@ -205,7 +205,9 @@ function downloadCsv(){
   const matrix=[['Alternativa','Cuello de botella','Carga máxima s/entrada','Capacidad entradas','Rendimiento esperado','Buenas a capacidad','N requerido','Viable','Motivo','Coste incremental €/turno','Productividad buenos/h-persona'],...rows.map(r=>[r.name,r.bottleneck,r.bottleneckLoad,r.capacity,r.yieldRate,r.capacityGood,r.requiredEntries,r.feasible?'Sí':'No',r.reason,r.dailyCost,r.productivity??''])];
   const csv=matrix.map(row=>row.map(value=>`"${String(value).replace(/"/g,'""')}"`).join(';')).join('\r\n');
   const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='comparacion-segunda-vida-caso2.csv';a.click();URL.revokeObjectURL(url);
+  a.href=url;a.download='comparacion-segunda-vida-caso2.csv';a.click();
+  // Mantiene vivo el objeto durante el inicio de la descarga en distintos navegadores.
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
 function restoreBase(){$('demand').value='196';$('minutes').value='420';$('focus').value='A';$('routeM').value='0.30';$('minYield').value='0.98';render();}

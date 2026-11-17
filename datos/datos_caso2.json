@@ -2,7 +2,7 @@
   "caso": "Caso 2 - Segunda Vida y el pedido de mandos reacondicionados",
   "parte": 2,
   "naturaleza": "Datos sintéticos didácticos; no representan una empresa real.",
-  "fuente": "Diez_casos_Estudiantes_v2(2).pdf, pp. 19-22",
+  "fuente": "Diez_casos_Estudiantes_v2(3).pdf, pp. 19-22",
   "recursos": {"personas_actuales":3,"minutos_nominales":480,"minutos_programados_excluidos":60,"minutos_netos_base":420,"segundos_netos_base":25200,"materiales_disponibles_por_turno":300,"horizonte_amortizacion_turnos":20,"presupuesto_inversion_eur":1000},
   "proceso": {"ruta_ligera_L":0.70,"ruta_modulo_M":0.30,"fallo_primera_prueba":0.10,"recuperacion_segundo_intento":0.80,"prueba_automatica_segundos":60,"intentos_maximos":2,"suplemento_manual":0.15},
   "tiempos_observados_segundos": {"A_clasificar_registrar":[29,31,30,32,28,30],"B_limpiar_trasladar":[78,82,80,81,79,80],"C_cambio_modulo":[118,122,120,124,116,120],"D_manejo_manual_prueba":[29,31,30,32,28,30],"E_embalar_guardar":[38,42,40,41,39,40]},

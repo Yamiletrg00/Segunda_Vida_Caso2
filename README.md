@@ -77,8 +77,12 @@ La demostración académica debe emplear carcasas inertes, tarjetas y croquis. N
 
 ## GitHub y publicación
 
-El desarrollo se preparó en la rama `parte2-web-app` del repositorio `Yamiletrg00/Segunda_Vida_Caso2`. GitHub Pages no se declara publicado por esta entrega. El repositorio detectado está configurado como **privado** y el documento del curso recuerda que la visibilidad del sitio depende del plan y de la configuración de Pages; no se ha cambiado la visibilidad ni se ha habilitado una publicación pública. La versión local es una entrega válida según la ficha.
+La auditoría y los refinamientos visuales se prepararon en la rama `auditoria-redisenio-2026` del repositorio `Yamiletrg00/Segunda_Vida_Caso2`. GitHub Pages no se declara publicado por esta entrega. El repositorio detectado está configurado como **privado** y el documento del curso recuerda que la visibilidad del sitio depende del plan y de la configuración de Pages; no se ha cambiado la visibilidad ni se ha habilitado una publicación pública. La versión local es una entrega válida según la ficha.
 
 ## Uso de IA
 
 La IA se utilizó como apoyo para organizar el contenido del PDF, proponer la arquitectura estática, escribir y depurar la implementación, documentar las fórmulas y diseñar pruebas. Los datos no se sustituyeron por datos inventados. El equipo debe revisar los cálculos, completar el contraste contra el anexo patrón liberado por el docente y poder explicar personalmente fórmulas, decisiones y limitaciones. El detalle se encuentra en `documentacion/registro_ia.md`.
+
+## Auditoría técnica 2026
+
+Se documentaron el diagnóstico, los cambios de accesibilidad/responsive y las verificaciones pendientes en [documentacion/auditoria_tecnica.md](documentacion/auditoria_tecnica.md). La inspección estática confirmó las rutas relativas de CSS/JS y el punto de entrada de GitHub Pages. No se afirma una nueva ejecución de pruebas de Node.js o navegador en esta intervención; consulta el informe para distinguir el registro histórico de pruebas de las verificaciones pendientes.

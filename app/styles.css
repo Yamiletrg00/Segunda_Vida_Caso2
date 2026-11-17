@@ -6,3 +6,60 @@
 
 .method-redesign{margin:18px 0;padding:18px;border:1px solid var(--line);border-radius:12px;background:#fbfdfc}.method-redesign h3{font-size:13px;margin:0 0 13px}.process-flow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}.process-node{min-width:82px;min-height:69px;border:1px solid #dce9e5;border-radius:10px;background:#f2f8f6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;padding:8px}.process-node b{font-size:16px;color:var(--teal-dark)}.process-node span{font-size:9px;color:var(--muted);line-height:1.3}.process-flow>i{font-style:normal;color:#9aa9a7;font-weight:800}.process-split,.process-out{display:grid;gap:5px}.route-label{padding:6px 9px;border-radius:7px;background:#e8f0f2;color:#49636b;font-size:9px;font-weight:750;white-space:nowrap}.route-m{background:#fff1d8;color:#86602a}.route-ok{background:#e0f3e9;color:#27714f}.route-fail{background:#fff1d8;color:#86602a}.route-reject{background:#fae8e5;color:#9a4e47}.method-redesign>p{font-size:10px;color:var(--muted);margin:13px 0 0;line-height:1.65}
 @media(max-width:640px){.process-flow{justify-content:flex-start}.process-flow>i{font-size:12px}.process-node{min-width:70px}.route-label{white-space:normal}}
+
+/* Auditoría 2026: refinamientos de accesibilidad, legibilidad y adaptación móvil */
+:focus-visible{outline:3px solid #29a99a;outline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{scroll-margin:90px}
+.nav a{transition:color .18s ease,border-color .18s ease}
+.kpi-card,.detail-card,.chart-card,.sampling-stat,.method-grid article{transition:box-shadow .18s ease,border-color .18s ease}
+.kpi-card:hover,.detail-card:hover,.method-grid article:hover{border-color:#c7ddd6;box-shadow:0 12px 28px rgba(16,45,58,.08)}
+.inputs-grid input:invalid,.inputs-grid select:invalid{border-color:var(--red)}
+.table-wrap{overscroll-behavior-x:contain;scrollbar-width:thin}
+.table-wrap:focus-within{outline:2px solid rgba(41,169,154,.28);outline-offset:2px}
+#ergonomia .table-wrap table{min-width:0;table-layout:fixed}
+#ergonomia .table-wrap th,#ergonomia .table-wrap td{white-space:normal;overflow-wrap:anywhere}
+#ergonomia .table-wrap th{font-size:9px}
+.chart-row{min-width:0}
+.bar-value{display:block;overflow-wrap:anywhere}
+.button{min-height:42px}
+@media(max-width:640px){
+  .shell{width:calc(100% - 24px)}
+  .topbar{gap:10px}
+  .brand{min-width:0}
+  .brand small{font-size:10px}
+  .nav{scrollbar-width:thin}
+  .nav a{padding:16px 0;min-height:48px}
+  .decision-card,.section-block{min-width:0}
+  .inputs-grid input,.inputs-grid select{min-height:46px;font-size:16px}
+  .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi-card{min-width:0;overflow-wrap:anywhere}
+  .kpi-value{line-height:1.15;overflow-wrap:anywhere}
+  .chart-card,.detail-card{min-width:0;padding:14px}
+  .chart-row{grid-template-columns:1fr;gap:5px}
+  .bars{min-width:0}
+  .bar-line{height:12px}
+  .flow-breakdown{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .focus-line{align-items:flex-start;flex-direction:column;gap:2px}
+  #ergonomia .table-wrap{overflow-x:visible}
+  #ergonomia .table-wrap table{width:100%;font-size:9px}
+  #ergonomia .table-wrap th,#ergonomia .table-wrap td{padding:7px 4px}
+  .sampling-stats{gap:8px}
+  .sampling-stat{min-width:0;padding:12px 9px}
+  .formula-inline{flex-wrap:wrap}
+  .sample-number{width:auto;min-width:64px}
+  .test-summary{align-items:flex-start}
+  .toolbar .button{flex:1 1 100%}
+  .footer{overflow-wrap:anywhere}
+}
+@media(max-width:380px){
+  .brand strong{font-size:11px}
+  .brand small{max-width:190px;line-height:1.2}
+  .kpi-grid{gap:7px}
+  .kpi-card{padding:11px}
+  .kpi-label{letter-spacing:.35px}
+  .kpi-value{font-size:21px}
+  .flow-breakdown{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}

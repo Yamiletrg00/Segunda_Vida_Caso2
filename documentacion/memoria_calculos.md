@@ -71,3 +71,7 @@ La ficha no proporciona altura de codo/mesa, masa, fuerza, postura, ángulos ni 
 Con demanda 196 y rendimiento mínimo .98: A es la alternativa obligatoria factible de menor coste (12.50 €/turno). Para demanda 220, B es la única alternativa obligatoria factible (100 €/turno). Al aumentar r a 1 en A, P2 soporta 1.10×131.10 + .98×46 = 189.29 s/entrada y la capacidad baja a 133; el cuello cambia a P2. Con rendimiento mínimo .995, ninguna alternativa obligatoria cumple porque su rendimiento esperado es .98.
 
 El PDF señala que el anexo patrón del docente se libera después del checkpoint. No fue proporcionado con el PDF del estudiante; las cifras anteriores son referencias manuales independientes y deben cotejarse con dicho patrón cuando esté disponible, sin borrar la primera versión.
+
+## 9. Revisión de restricciones y estados de la herramienta
+
+Para una entrada que supera simultáneamente la capacidad y los materiales, la interfaz debe enumerar ambas restricciones. La salida “productividad no disponible” se conserva para un plan no factible, en lugar de presentar un guion ambiguo como si faltara calcular. Los datos fuente y sus fórmulas no se alteran.

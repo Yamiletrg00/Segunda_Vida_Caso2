@@ -3,7 +3,7 @@
 **Versión del modelo:** 1.0.0  
 **Fecha:** 16 de noviembre de 2026  
 **Entorno:** Node.js v22.16.0; motor JavaScript de app/app.js con DOM simulado mínimo para smoke test.  
-**Resultado del runner:** **8 de 8 pruebas aprobadas**.  
+**Resultado del runner registrado antes de este ajuste:** **8 de 8 pruebas aprobadas**. La prueba adicional R-01 queda incorporada en el código y en la matriz; su nuevo resultado requiere ejecutar el runner actualizado.  
 **Sintaxis:** node --check app/app.js terminó sin errores.  
 **Render smoke:** se generaron tablas de comparación y panel de escenario; esto no sustituye una prueba visual del navegador.
 

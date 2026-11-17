@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102d3a">
   <meta name="description" content="Microherramienta de análisis y decisión para el Caso 2 Segunda Vida, Parte 2 de Estudio y Diseño del Trabajo.">
   <title>Segunda Vida | Herramienta de decisión</title>
   <link rel="stylesheet" href="styles.css">
@@ -13,7 +14,7 @@
       <span class="brand-mark">SV</span>
       <span><strong>SEGUNDA VIDA</strong><small>Estudio y Diseño del Trabajo · Caso 2</small></span>
     </a>
-    <div class="top-meta"><span class="status-dot"></span> Modelo académico · Datos sintéticos</div>
+    <div class="top-meta"><span class="status-dot"></span> Modelo académico · Datos sintéticos · Caso 2 / Parte 2</div>
   </header>
 
   <nav class="nav" aria-label="Navegación principal">
@@ -31,7 +32,7 @@
         <p class="eyebrow">PARTE 2 · SEMANAS 8–11</p>
         <h1>Planear entregas<br><em>sin perder de vista la calidad.</em></h1>
         <p class="hero-lede">Compara la referencia y los dos rediseños obligatorios para reacondicionar mandos. Cambia los parámetros del pedido, revisa el recurso limitante y comprueba cuándo una opción deja de ser viable.</p>
-        <div class="hero-tags"><span>196 mandos buenos esperados</span><span>420 min netos</span><span>20 turnos de horizonte</span></div>
+        <div class="hero-tags"><span>196 mandos buenos esperados</span><span id="minutesTag">420 min netos por persona</span><span>20 turnos de horizonte</span></div>
       </div>
       <div class="hero-art" aria-hidden="true">
         <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
@@ -84,7 +85,7 @@
     <section id="comparador" class="panel section-block">
       <div class="section-heading">
         <div><p class="eyebrow">01 · HERRAMIENTA DE DECISIÓN</p><h2>Comparación de alternativas</h2><p class="section-subtitle">Capacidad en régimen, rendimiento esperado y coste incremental por turno.</p></div>
-        <span class="unit-pill">420 min · editable</span>
+        <span class="unit-pill" id="minutesPill">420 min netos · editable</span>
       </div>
       <div class="table-wrap">
         <table id="comparisonTable">
@@ -110,7 +111,7 @@
         <div class="sampling-chart-card"><div class="donut" id="samplingDonut"><div><strong>300</strong><small>instantes</small></div></div><div class="sampling-legend" id="samplingLegend"></div></div>
         <div class="sampling-stats" id="samplingStats"></div>
       </div>
-      <div class="formula-inline"><div><span class="eyebrow">TAMAÑO ORIENTATIVO PARA ESTIMAR ESPERA</span><strong>n = z² p (1 − p) / e²</strong><p>Con p = 0.13, z = 1.96 y e = 0.05: n = 173.79 → <b>174 observaciones</b> (redondeo hacia arriba). Intervalo normal aproximado 95 % observado para espera: <b>9.19 %–16.81 %</b>.</p></div><div class="sample-number"><strong>174</strong><small>observaciones<br>orientativas</small></div></div>
+      <div class="formula-inline"><div><span class="eyebrow">TAMAÑO ORIENTATIVO PARA ESTIMAR ESPERA</span><strong>n = z² p (1 − p) / e²</strong><p>Con p = 0.13, z = 1.96 y e = 0.05: n = 173.79 → <b>174 observaciones totales</b> (redondeo hacia arriba). La muestra suministrada ya contiene 300 instantes. Intervalo normal aproximado 95 % para espera: <b>9.19 %–16.81 %</b>.</p></div><div class="sample-number"><strong>174</strong><small>observaciones<br>orientativas</small></div></div>
       <p class="small-note">El 12 % de instantes de retrabajo no es una tasa de fallos: la observación clasifica actividad en un instante; la tasa de fallo del proceso se aplica a entradas que pasan por la primera prueba. No se debe descontar automáticamente esta proporción de la capacidad ni sumarla al tiempo estándar.</p>
     </section>
 
@@ -141,9 +142,9 @@
     </section>
 
     <section id="validacion" class="panel section-block">
-      <div class="section-heading"><div><p class="eyebrow">04 · VALIDACIÓN Y CONCILIACIÓN</p><h2>Pruebas de aceptación</h2><p class="section-subtitle">Tres referencias manuales del PDF, frontera de capacidad, dato inválido, escenario no factible y prueba característica de mezcla.</p></div><button id="runTests" class="button button-primary" type="button">▶ Ejecutar pruebas</button></div>
+      <div class="section-heading"><div><p class="eyebrow">04 · VALIDACIÓN Y CONCILIACIÓN</p><h2>Pruebas de aceptación</h2><p class="section-subtitle">Tres referencias manuales independientes, frontera de capacidad, dato inválido, escenario no factible y prueba de restricciones simultáneas y mezcla.</p></div><button id="runTests" class="button button-primary" type="button">▶ Ejecutar pruebas</button></div>
       <div class="test-summary" id="testSummary"><strong>Las pruebas aún no se han ejecutado.</strong><span>Ejecuta la matriz para verificar las salidas del modelo.</span></div>
-      <div class="table-wrap"><table><thead><tr><th>ID</th><th>Entradas</th><th>Resultado esperado</th><th>Resultado obtenido</th><th>Diferencia</th><th>Tolerancia</th><th>Estado</th><th>Explicación</th></tr></thead><tbody id="testBody"><tr><td colspan="8">Pulsa “Ejecutar pruebas”.</td></tr></tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>ID</th><th>Entradas</th><th>Resultado esperado</th><th>Resultado obtenido</th><th>Diferencia</th><th>Tolerancia</th><th>Estado</th><th>Explicación</th></tr></thead><tbody id="testBody"><tr><td colspan="8">Pulsa “Ejecutar pruebas”; aquí aparecerán los resultados obtenidos.</td></tr></tbody></table></div>
       <p class="small-note">Las tres referencias se calcularon manualmente antes de programar. El PDF indica que el anexo patrón del docente se libera después del checkpoint; no se proporcionó ese anexo, por lo que esta versión documenta referencias manuales propias y no afirma haberlas contrastado con patrones reservados.</p>
     </section>
 

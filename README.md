@@ -59,7 +59,7 @@ La aplicación implementa el alcance obligatorio **Referencia + A + B**. La alte
 
 ## Pruebas
 
-Pulsa **Ejecutar pruebas** en la sección Validación (runner Node.js: 8/8 pruebas aprobadas). La matriz usa tres referencias calculadas manualmente antes de programar, una frontera de capacidad (391 y 390 min), una entrada inválida, una alternativa no factible y una comprobación característica del cambio de mezcla de rutas. La tabla exportable se conserva en `pruebas/`.
+Pulsa **Ejecutar pruebas** en la sección Validación (runner Node.js; la versión registrada antes del nuevo caso R-01 reportó 8/8 pruebas aprobadas; ejecutar nuevamente el runner actualizado antes de entregar). La matriz usa tres referencias calculadas manualmente antes de programar, una frontera de capacidad (391 y 390 min), una entrada inválida, una alternativa no factible y una comprobación característica del cambio de mezcla de rutas. La tabla exportable se conserva en `pruebas/`.
 
 El documento PDF señala que el anexo patrón del docente se libera después del checkpoint. Ese anexo no forma parte de los archivos suministrados en esta conversación; por ello las referencias que se documentan son cálculos manuales independientes y no se afirma que hayan sido contrastados con el patrón reservado. Se deberá completar esa conciliación cuando el equipo reciba dicho anexo.
 
@@ -77,7 +77,7 @@ La demostración académica debe emplear carcasas inertes, tarjetas y croquis. N
 
 ## GitHub y publicación
 
-El desarrollo se preparó en la rama `parte2-web-app` del repositorio `Yamiletrg00/Segunda_Vida_Caso2`. GitHub Pages no se declara publicado por esta entrega. El repositorio detectado está configurado como **privado** y el documento del curso recuerda que la visibilidad del sitio depende del plan y de la configuración de Pages; no se ha cambiado la visibilidad ni se ha habilitado una publicación pública. La versión local es una entrega válida según la ficha.
+El desarrollo se preparó en la rama `parte2-web-app` del repositorio `Yamiletrg00/Segunda_Vida_Caso2`. GitHub Pages no se declara publicado por esta entrega. El repositorio se encontró con visibilidad **pública** durante esta revisión. No se confirmó que GitHub Pages esté habilitado ni que exista un despliegue publicado; después de integrar esta rama, se puede configurar Pages desde **Settings → Pages → Deploy from a branch → main / (root)**. El `index.html` raíz dirige a `app/index.html`. La versión local es una entrega válida según la ficha.
 
 ## Uso de IA
 

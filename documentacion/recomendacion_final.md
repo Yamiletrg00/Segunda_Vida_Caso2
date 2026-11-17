@@ -15,3 +15,5 @@ El muestreo registra 70 % de primera pasada, 12 % de retrabajo, 13 % de espera y
 **Límites y seguimiento:** el modelo representa medias en régimen con inventario en proceso suficiente y recursos sin solapamientos no autorizados. No garantiza entregas probabilísticas turno por turno. No modela distribución de llegadas, colas, variabilidad detallada ni fiabilidad estadística del piloto de 50 entradas. Si cambia la demanda, mezcla M, disponibilidad, calidad o retrabajo, se debe recalcular.
 
 La revisión ergonómica es geométrica y preliminar, basada en tres perfiles sintéticos; no es diagnóstico ni certificación. No hay datos para cálculo biomecánico cuantitativo. La práctica debe utilizar carcasas inertes, tarjetas y croquis, sin reparación electrónica real. Antes de cerrar la entrega, el equipo debe cotejar las referencias manuales con el anexo patrón cuando el docente lo libere y registrar las discrepancias.
+
+La aplicación también expone por separado cuando capacidad, material o rendimiento mínimo no se cumplen a la vez; no convierte una alternativa no factible en recomendación y no calcula productividad para un pedido que no puede planearse.

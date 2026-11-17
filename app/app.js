@@ -92,9 +92,11 @@ function calculateAlternative(key, input) {
   const laborHoursAvailable=alt.workers*input.minutes/60;
   const productivity=feasible && laborHoursAvailable>0 ? goodAtPlan/laborHoursAvailable : null;
   let reason='Cumple capacidad, material y rendimiento mínimo.';
-  if(!capacityOK) reason=`Capacidad insuficiente: requiere ${requiredEntries} entradas y permite ${capacity}.`;
-  else if(!materialOK) reason=`Material insuficiente: requiere ${requiredEntries} entradas y hay ${MODEL.materialAvailable}.`;
-  else if(!yieldOK) reason=`Rendimiento ${pct(yieldRate)} inferior al mínimo ${pct(input.minYield)}.`;
+  const restrictions=[];
+  if(!capacityOK) restrictions.push(`Capacidad insuficiente: requiere ${requiredEntries} entradas y permite ${capacity}.`);
+  if(!materialOK) restrictions.push(`Material insuficiente: requiere ${requiredEntries} entradas y hay ${MODEL.materialAvailable}.`);
+  if(!yieldOK) restrictions.push(`Rendimiento ${pct(yieldRate)} inferior al mínimo ${pct(input.minYield)}.`);
+  if(restrictions.length) reason=restrictions.join(' ');
   return {key,name:alt.name,short:alt.short,workers:alt.workers,counts,loads,bottleneck,bottleneckLoad,capacity,capacityGood:goodAtCapacity,
     yieldRate,requiredEntries,goodAtPlan,materialOK,capacityOK,yieldOK,feasible,reason,dailyCost,productivity,laborHoursAvailable};
 }
@@ -112,11 +114,17 @@ function render() {
   if(errors.length){
     $('recommended').textContent='Entrada inválida'; $('recommendNote').textContent='Corrige los campos para calcular.';
     ['kpiN','kpiCapacity','kpiStatus'].forEach(id=>$(id).textContent='—');
-    $('kpiBottleneck').textContent='Cuello de botella: —'; $('kpiStatusNote').textContent='';
+    $('kpiBottleneck').textContent='Cuello de botella: no calculado'; $('kpiStatusNote').textContent='';
+    ['demand','minutes','focus','routeM','minYield'].forEach(id=>$(id).setAttribute('aria-invalid',String(!Number.isFinite($(id).type==='number' && $(id).value.trim()!=='' ? Number($(id).value) : (id==='focus'?0:NaN)) || (id==='routeM' && (Number($(id).value)<0 || Number($(id).value)>1)) || (id==='minYield' && (Number($(id).value)<0 || Number($(id).value)>1)))));
+    const minutePill=$('minutesPill'); if(minutePill) minutePill.textContent='Ventana no válida';
+    const minuteTag=$('minutesTag'); if(minuteTag) minuteTag.textContent='Ventana no válida';
     $('comparisonBody').innerHTML=`<tr><td colspan="8"><span class="tag tag-bad">No calculado</span> ${escapeHtml(errors.join(' '))}</td></tr>`;
-    $('loadChart').innerHTML=''; $('flowBreakdown').innerHTML=''; $('focusDetail').innerHTML=''; return;
+    $('loadChart').innerHTML=''; $('flowBreakdown').innerHTML=''; $('focusDetail').innerHTML='<p class="error-message">Resultados no disponibles: corrige las entradas indicadas para recalcular.</p>'; return;
   }
+  ['demand','minutes','focus','routeM','minYield'].forEach(id=>$(id).setAttribute('aria-invalid','false'));
   const rows=calculateAll(input), focused=rows.find(x=>x.key===input.focus);
+  const minutePill=$('minutesPill'); if(minutePill) minutePill.textContent=`${fmt(input.minutes,0)} min netos · editable`;
+  const minuteTag=$('minutesTag'); if(minuteTag) minuteTag.textContent=`${fmt(input.minutes,0)} min netos por persona`;
   const viable=rows.filter(x=>x.feasible).sort((a,b)=>a.dailyCost-b.dailyCost || a.workers-b.workers);
   const best=viable[0]??null;
   $('recommended').textContent=best?best.name.split(' · ')[0]:'Ninguna';
@@ -131,7 +139,7 @@ function render() {
     <td>${escapeHtml(row.bottleneck.replace(' · ',' '))}<span class="alt-sub">${fmt(row.bottleneckLoad)} s/entrada</span></td>
     <td><b>${fmt(row.capacity,0)}</b></td><td>${fmt(row.capacityGood)}</td><td>${fmt(row.requiredEntries,0)}</td>
     <td>${row.feasible?'<span class="tag tag-good">Sí</span>':'<span class="tag tag-bad">No</span>'}<span class="alt-sub">${escapeHtml(row.reason)}</span></td>
-    <td><b>${money(row.dailyCost)}</b></td><td>${row.productivity===null?'—':`${fmt(row.productivity,3)}<span class="alt-sub">buenos/h-persona</span>`}</td>
+    <td><b>${money(row.dailyCost)}</b></td><td>${row.productivity===null?'<span class="tag tag-neutral">No disponible · plan no factible</span>':`${fmt(row.productivity,3)}<span class="alt-sub">buenos/h-persona</span>`}</td>
   </tr>`).join('');
   renderLoadChart(rows);
   renderFlow(rows[0].counts,focused);
@@ -193,8 +201,10 @@ function runTests(){
   specs.push({id:'C-01',inputs:'A · D=196 · 420 min · r=1.00 · y mín.=0.98',expected:'Capacidad=133; cuello Persona 2 (C+E)',actual:`Capacidad=${mixA.capacity}; cuello ${mixA.bottleneck}`,diff:`Δ cap. ${mixA.capacity-133}`,tol:'Capacidad ±0; recurso exacto',pass:mixA.capacity===133&&mixA.bottleneck.startsWith('Persona 2'),why:'Prueba característica: al aumentar la ruta M crece la carga de cambios de módulo y cambia el cuello.'});
   const highMin=calculateAll({...base,minYield:.995});
   specs.push({id:'S-01',inputs:'Demanda=196 · 420 min · r=0.30 · rendimiento mínimo=0.995',expected:'Ninguna opción obligatoria viable: rendimiento previsto 0.98 < 0.995',actual:`${highMin.filter(x=>x.feasible).length} opciones viables; Y=${pct(highMin[0].yieldRate)}`,diff:'No aplica',tol:'Estado exacto',pass:highMin.every(x=>!x.feasible)&&highMin.every(x=>x.yieldRate===.98),why:'Sensibilidad al contrato de rendimiento. La opción C no se modela porque es extensión voluntaria del caso.'});
+  const combined=calculateAlternative('A',{...base,demand:400});
+  specs.push({id:'R-01',inputs:'A · D=400 · 420 min · r=0.30 · y mín.=0.98',expected:'No viable por capacidad y por materiales; ambos límites visibles',actual:combined.reason,diff:'No aplica',tol:'Dos restricciones identificadas',pass:!combined.feasible&&!combined.capacityOK&&!combined.materialOK&&combined.reason.includes('Capacidad insuficiente')&&combined.reason.includes('Material insuficiente'),why:'Verifica que el resumen no oculte una segunda restricción cuando más de una falla.'});
   const passes=specs.filter(x=>x.pass).length;
-  $('testSummary').innerHTML=`<strong class="test-state ${passes===specs.length?'test-pass':'test-fail'}">${passes}/${specs.length} pruebas correctas</strong><span>Ejecutadas en el navegador · tolerancias declaradas en cada prueba</span>`;
+  $('testSummary').innerHTML=`<strong class="test-state ${passes===specs.length?'test-pass':'test-fail'}">${passes}/${specs.length} pruebas correctas</strong><span>Motor determinista JavaScript · tolerancias declaradas en cada prueba</span>`;
   $('testBody').innerHTML=specs.map(x=>`<tr><td><b>${x.id}</b></td><td>${escapeHtml(x.inputs)}</td><td>${escapeHtml(x.expected)}</td><td>${escapeHtml(x.actual)}</td><td>${escapeHtml(x.diff)}</td><td>${escapeHtml(x.tol)}</td><td>${x.pass?'<span class="tag tag-good">OK</span>':'<span class="tag tag-bad">FALLO</span>'}</td><td>${escapeHtml(x.why)}</td></tr>`).join('');
   return {passes,total:specs.length,specs};
 }

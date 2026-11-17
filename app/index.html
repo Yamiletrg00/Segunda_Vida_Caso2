@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Microherramienta de análisis y decisión para el Caso 2 Segunda Vida, Parte 2 de Estudio y Diseño del Trabajo.">
+  <title>Segunda Vida | Herramienta de decisión</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Segunda Vida, inicio">
+      <span class="brand-mark">SV</span>
+      <span><strong>SEGUNDA VIDA</strong><small>Estudio y Diseño del Trabajo · Caso 2</small></span>
+    </a>
+    <div class="top-meta"><span class="status-dot"></span> Modelo académico · Datos sintéticos</div>
+  </header>
+
+  <nav class="nav" aria-label="Navegación principal">
+    <a class="active" href="#inicio">Resumen</a>
+    <a href="#comparador">Comparador</a>
+    <a href="#muestreo">Muestreo</a>
+    <a href="#ergonomia">Ergonomía</a>
+    <a href="#validacion">Validación</a>
+    <a href="#metodo">Fórmulas</a>
+  </nav>
+
+  <main class="shell">
+    <section id="inicio" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">PARTE 2 · SEMANAS 8–11</p>
+        <h1>Planear entregas<br><em>sin perder de vista la calidad.</em></h1>
+        <p class="hero-lede">Compara la referencia y los dos rediseños obligatorios para reacondicionar mandos. Cambia los parámetros del pedido, revisa el recurso limitante y comprueba cuándo una opción deja de ser viable.</p>
+        <div class="hero-tags"><span>196 mandos buenos esperados</span><span>420 min netos</span><span>20 turnos de horizonte</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="controller"><span></span><b></b><i></i><strong></strong></div>
+        <div class="art-label">REACONDICIONAR<br><small>· CLASIFICAR · LIMPIAR · PROBAR ·</small></div>
+      </div>
+    </section>
+
+    <section class="decision-card" aria-labelledby="decision-title">
+      <div class="section-heading compact">
+        <div><p class="eyebrow">PANEL DE DECISIÓN</p><h2 id="decision-title">Ajusta el escenario</h2></div>
+        <button id="resetBtn" class="button button-ghost" type="button">↺ Restaurar base</button>
+      </div>
+      <div class="inputs-grid">
+        <label>Demanda de mandos buenos
+          <input id="demand" type="number" min="0" step="1" value="196" inputmode="numeric">
+          <small>Unidades buenas esperadas por turno</small>
+        </label>
+        <label>Ventana neta
+          <input id="minutes" type="number" min="0.01" step="1" value="420" inputmode="decimal">
+          <small>Minutos disponibles por persona</small>
+        </label>
+        <label>Alternativa en foco
+          <select id="focus">
+            <option value="REF">Referencia</option>
+            <option value="A" selected>A · Organizador de limpieza</option>
+            <option value="B">B · Cuarta persona y nueva asignación</option>
+          </select>
+          <small>La tabla compara las tres opciones siempre</small>
+        </label>
+        <label>Proporción de ruta M
+          <input id="routeM" type="number" min="0" max="1" step="0.01" value="0.30" inputmode="decimal">
+          <small>Fracción de entradas que recibe módulo (0–1)</small>
+        </label>
+        <label>Rendimiento mínimo esperado
+          <input id="minYield" type="number" min="0" max="1" step="0.001" value="0.98" inputmode="decimal">
+          <small>Fracción mínima de mandos buenos (0–1)</small>
+        </label>
+      </div>
+      <div class="input-foot"><p id="inputError" class="error-message" role="alert" aria-live="polite"></p><span>Las mismas entradas se aplican a Referencia, A y B.</span></div>
+    </section>
+
+    <section class="kpi-grid" aria-label="Indicadores del escenario enfocado">
+      <article class="kpi-card kpi-primary"><div class="kpi-label">Recomendación económica viable</div><div class="kpi-value" id="recommended">—</div><div class="kpi-note" id="recommendNote">Calculando alternativas…</div></article>
+      <article class="kpi-card"><div class="kpi-label">Entradas requeridas</div><div class="kpi-value" id="kpiN">—</div><div class="kpi-note">Entradas para cubrir la demanda</div></article>
+      <article class="kpi-card"><div class="kpi-label">Capacidad de entrada</div><div class="kpi-value" id="kpiCapacity">—</div><div class="kpi-note" id="kpiBottleneck">Cuello de botella: —</div></article>
+      <article class="kpi-card"><div class="kpi-label">Cumplimiento del escenario</div><div class="kpi-value" id="kpiStatus">—</div><div class="kpi-note" id="kpiStatusNote">—</div></article>
+    </section>
+
+    <section id="comparador" class="panel section-block">
+      <div class="section-heading">
+        <div><p class="eyebrow">01 · HERRAMIENTA DE DECISIÓN</p><h2>Comparación de alternativas</h2><p class="section-subtitle">Capacidad en régimen, rendimiento esperado y coste incremental por turno.</p></div>
+        <span class="unit-pill">420 min · editable</span>
+      </div>
+      <div class="table-wrap">
+        <table id="comparisonTable">
+          <thead><tr><th>Alternativa</th><th>Cuello de botella</th><th>Cap. entradas</th><th>Buenas a capacidad</th><th>N requerido</th><th>Viable</th><th>Coste / turno</th><th>Buenos / h-persona</th></tr></thead>
+          <tbody id="comparisonBody"><tr><td colspan="8">Calculando…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head"><div><h3>Carga por recurso</h3><p>Segundos estándar por entrada · incluye las visitas esperadas de retrabajo</p></div><span class="legend"><i class="legend-a"></i> Ref <i class="legend-b"></i> A <i class="legend-c"></i> B</span></div>
+        <div id="loadChart" class="load-chart" role="img" aria-label="Gráfico de cargas estándar por recurso"></div>
+      </div>
+      <div class="detail-grid">
+        <article class="detail-card"><span class="detail-icon">↗</span><h3>Flujo esperado por cada 100 entradas</h3><div id="flowBreakdown" class="flow-breakdown"></div></article>
+        <article class="detail-card"><span class="detail-icon">◎</span><h3>Alternativa en foco</h3><div id="focusDetail"></div></article>
+      </div>
+      <p class="model-warning"><strong>Advertencia del modelo:</strong> Modelo de medias; no garantiza la entrega de cada turno. Los resultados son expectativas de planificación, no probabilidades de cumplir el pedido ni promesas de servicio.</p>
+      <div class="toolbar"><button id="downloadCsv" class="button button-primary" type="button">⇩ Descargar comparación CSV</button><button id="printBtn" class="button button-ghost" type="button">Imprimir resumen</button></div>
+    </section>
+
+    <section id="muestreo" class="panel section-block">
+      <div class="section-heading"><div><p class="eyebrow">02 · MUESTREO DEL TRABAJO</p><h2>¿En qué se ocupa el tiempo?</h2><p class="section-subtitle">300 instantes aleatorios sintéticos, distribuidos proporcionalmente entre tres puestos.</p></div><span class="unit-pill">n = 300 instantes</span></div>
+      <div class="sampling-layout">
+        <div class="sampling-chart-card"><div class="donut" id="samplingDonut"><div><strong>300</strong><small>instantes</small></div></div><div class="sampling-legend" id="samplingLegend"></div></div>
+        <div class="sampling-stats" id="samplingStats"></div>
+      </div>
+      <div class="formula-inline"><div><span class="eyebrow">TAMAÑO ORIENTATIVO PARA ESTIMAR ESPERA</span><strong>n = z² p (1 − p) / e²</strong><p>Con p = 0.13, z = 1.96 y e = 0.05: n = 173.79 → <b>174 observaciones</b> (redondeo hacia arriba). Intervalo normal aproximado 95 % observado para espera: <b>9.19 %–16.81 %</b>.</p></div><div class="sample-number"><strong>174</strong><small>observaciones<br>orientativas</small></div></div>
+      <p class="small-note">El 12 % de instantes de retrabajo no es una tasa de fallos: la observación clasifica actividad en un instante; la tasa de fallo del proceso se aplica a entradas que pasan por la primera prueba. No se debe descontar automáticamente esta proporción de la capacidad ni sumarla al tiempo estándar.</p>
+    </section>
+
+    <section id="ergonomia" class="panel section-block">
+      <div class="section-heading"><div><p class="eyebrow">03 · ANTROPOMETRÍA Y ERGONOMÍA</p><h2>Acercar lo frecuente</h2><p class="section-subtitle">Revisión geométrica basada en los tres perfiles sintéticos de alcance cómodo del Caso 2.</p></div><span class="unit-pill">Distancias en cm</span></div>
+      <div class="ergo-callout"><div class="ergo-icon">⌖</div><div><strong>Propuesta de ubicación frecuente: 28 cm desde el borde.</strong><p>Es la distancia existente más cercana y queda dentro del alcance cómodo de los tres perfiles (32, 37 y 42 cm). Mantener zonas físicas diferenciadas para entrada, aprobados y descarte.</p></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Perfil sintético</th><th>Alcance cómodo</th><th>Contenedor a 28 cm</th><th>Contenedor a 35 cm</th><th>Contenedor a 48 cm</th></tr></thead><tbody>
+        <tr><td>Perfil 1</td><td>32 cm</td><td><span class="tag tag-good">Dentro</span></td><td><span class="tag tag-bad">Fuera</span></td><td><span class="tag tag-bad">Fuera</span></td></tr>
+        <tr><td>Perfil 2</td><td>37 cm</td><td><span class="tag tag-good">Dentro</span></td><td><span class="tag tag-good">Dentro</span></td><td><span class="tag tag-bad">Fuera</span></td></tr>
+        <tr><td>Perfil 3</td><td>42 cm</td><td><span class="tag tag-good">Dentro</span></td><td><span class="tag tag-good">Dentro</span></td><td><span class="tag tag-bad">Fuera</span></td></tr>
+      </tbody></table></div>
+      <div class="method-redesign">
+        <h3>Secuencia propuesta y controles conservados</h3>
+        <div class="process-flow">
+          <div class="process-node"><b>A</b><span>Clasificar<br>y registrar</span></div><i>→</i>
+          <div class="process-node"><b>B</b><span>Limpiar<br>carcasa</span></div><i>→</i>
+          <div class="process-split"><div class="route-label">L · ligera</div><div class="route-label route-m">M · módulo</div></div><i>→</i>
+          <div class="process-node"><b>D</b><span>Primera<br>prueba</span></div><i>→</i>
+          <div class="process-out"><div class="route-label route-ok">Pasa → E · Embalar</div><div class="route-label route-fail">Falla → C · Retrabajo → D · 2.ª prueba</div><div class="route-label route-reject">Falla de nuevo → Descarte</div></div>
+        </div>
+        <p>El rediseño geométrico acerca los contenedores frecuentes al alcance común sin mezclar rutas. La secuencia conserva limpieza para L y M, la sustitución inicial solo para M, una sola oportunidad de retrabajo y el embalaje únicamente de unidades buenas.</p>
+      </div>
+      <div class="ergo-visual">
+        <div class="reach-scale"><div class="scale-title">Distancia desde el borde de trabajo</div><div class="scale-line"><span class="reach-zone" style="width:53.33%"></span><span class="scale-mark mark-28"><b>28</b><small>Propuesta</small></span><span class="scale-mark mark-35"><b>35</b><small>Contenedor</small></span><span class="scale-mark mark-48"><b>48</b><small>Contenedor</small></span></div><div class="scale-labels"><span>0 cm · Borde</span><span>52.5 cm · Referencia gráfica</span></div><div class="scale-caption">Zona común de alcance representada hasta 32 cm (perfil de menor alcance).</div></div>
+        <div class="bins"><div class="bin bin-in">ENTRADA<small>Sin procesar</small></div><div class="bin bin-ok">APROBADOS<small>Listos para salida</small></div><div class="bin bin-reject">DESCARTE<small>No recuperados</small></div></div>
+      </div>
+      <div class="limit-note"><b>Límite del análisis:</b> el Caso 2 no proporciona alturas de codo, alturas de mesa, masas, fuerzas, posturas articulares ni frecuencias de manipulación para calcular un modelo biomecánico. Por ello no se inventa un cálculo ni se diagnostican lesiones o se certifica cumplimiento normativo. La propuesta es geométrica y debe representarse en un croquis o maqueta con elementos inertes, sin atribuirle ahorros de tiempo no medidos.</div>
+    </section>
+
+    <section id="validacion" class="panel section-block">
+      <div class="section-heading"><div><p class="eyebrow">04 · VALIDACIÓN Y CONCILIACIÓN</p><h2>Pruebas de aceptación</h2><p class="section-subtitle">Tres referencias manuales del PDF, frontera de capacidad, dato inválido, escenario no factible y prueba característica de mezcla.</p></div><button id="runTests" class="button button-primary" type="button">▶ Ejecutar pruebas</button></div>
+      <div class="test-summary" id="testSummary"><strong>Las pruebas aún no se han ejecutado.</strong><span>Ejecuta la matriz para verificar las salidas del modelo.</span></div>
+      <div class="table-wrap"><table><thead><tr><th>ID</th><th>Entradas</th><th>Resultado esperado</th><th>Resultado obtenido</th><th>Diferencia</th><th>Tolerancia</th><th>Estado</th><th>Explicación</th></tr></thead><tbody id="testBody"><tr><td colspan="8">Pulsa “Ejecutar pruebas”.</td></tr></tbody></table></div>
+      <p class="small-note">Las tres referencias se calcularon manualmente antes de programar. El PDF indica que el anexo patrón del docente se libera después del checkpoint; no se proporcionó ese anexo, por lo que esta versión documenta referencias manuales propias y no afirma haberlas contrastado con patrones reservados.</p>
+    </section>
+
+    <section id="metodo" class="panel section-block">
+      <div class="section-heading"><div><p class="eyebrow">05 · MÉTODO Y TRAZABILIDAD</p><h2>Cómo se calcula</h2><p class="section-subtitle">El modelo separa datos suministrados, resultados calculados y supuestos explícitos.</p></div></div>
+      <div class="method-grid">
+        <article><span class="method-number">01</span><h3>Tiempo estándar manual</h3><p>Media observada × valoración = tiempo normal. Después, tiempo normal × 1.15 = tiempo estándar. No se añade suplemento a los 60 s automáticos.</p><code>TE = media(t) × valoración × 1.15</code></article>
+        <article><span class="method-number">02</span><h3>Rendimiento esperado</h3><p>El 10 % de primeras pruebas falla; el 80 % de esos reintentos se recupera y el resto se descarta. Sin un tercer intento.</p><code>Y = 1 − f + f × 0.80 = 0.98</code></article>
+        <article><span class="method-number">03</span><h3>Cargas por recurso</h3><p>Se cuenta el trabajo esperado por entrada, incluyendo cambios iniciales y de retrabajo, dos pruebas cuando corresponde y embalaje solo de buenos.</p><code>Cap. = ⌊ minutos × 60 / carga máx. ⌋</code></article>
+        <article><span class="method-number">04</span><h3>Pedido y factibilidad</h3><p>Las entradas requeridas se redondean hacia arriba. La opción es factible si cabe en capacidad, hay material y alcanza el rendimiento mínimo.</p><code>N = ⌈ demanda buena / Y ⌉</code></article>
+        <article><span class="method-number">05</span><h3>Coste incremental</h3><p>La inversión se amortiza linealmente en 20 turnos; en B se suma el coste recurrente de 90 € por turno.</p><code>A: 250/20 = 12.50 € · B: 200/20 + 90 = 100 €</code></article>
+        <article><span class="method-number">06</span><h3>Productividad</h3><p>Buenos esperados del plan dividido entre las horas-persona disponibles del equipo durante la ventana neta. Solo se reporta para planes factibles.</p><code>Productividad = buenos / (personas × min/60)</code></article>
+      </div>
+      <div class="data-provenance"><h3>Datos y límites</h3><p><b>Originales del PDF:</b> tiempos A–E, valoraciones, 15 % de suplemento manual, 60 s automáticos, rutas L/M y probabilidades de retrabajo, asignaciones, costes, materiales disponibles, observaciones de muestreo y alcances cómodos.</p><p><b>Supuestos del modelo:</b> los tiempos esperados del trabajo por entrada usan frecuencias promedio; las fracciones de ruta/fallo pueden producir cantidades esperadas; el buffer permite planificar en régimen. No se predicen colas ni garantías probabilísticas.</p><p><b>Fuera del alcance:</b> tiempos predeterminados MTM/MOST sin tabla autorizada, biomecánica cuantitativa sin datos físicos, validación de pilotos en una empresa real y una tasa de servicio garantizada.</p></div>
+    </section>
+
+    <footer class="footer"><div><strong>SEGUNDA VIDA</strong><span>Microherramienta académica · Ingeniería Industrial</span></div><div>Versión 1.0 · HTML / CSS / JavaScript · Sin API ni datos personales</div></footer>
+  </main>
+  <script src="app.js" defer></script>
+</body>
+</html>

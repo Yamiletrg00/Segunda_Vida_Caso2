@@ -1,0 +1,18 @@
+{
+  "caso": "Caso 2 - Segunda Vida y el pedido de mandos reacondicionados",
+  "parte": 2,
+  "naturaleza": "Datos sintéticos didácticos; no representan una empresa real.",
+  "fuente": "Diez_casos_Estudiantes_v2(2).pdf, pp. 19-22",
+  "recursos": {"personas_actuales":3,"minutos_nominales":480,"minutos_programados_excluidos":60,"minutos_netos_base":420,"segundos_netos_base":25200,"materiales_disponibles_por_turno":300,"horizonte_amortizacion_turnos":20,"presupuesto_inversion_eur":1000},
+  "proceso": {"ruta_ligera_L":0.70,"ruta_modulo_M":0.30,"fallo_primera_prueba":0.10,"recuperacion_segundo_intento":0.80,"prueba_automatica_segundos":60,"intentos_maximos":2,"suplemento_manual":0.15},
+  "tiempos_observados_segundos": {"A_clasificar_registrar":[29,31,30,32,28,30],"B_limpiar_trasladar":[78,82,80,81,79,80],"C_cambio_modulo":[118,122,120,124,116,120],"D_manejo_manual_prueba":[29,31,30,32,28,30],"E_embalar_guardar":[38,42,40,41,39,40]},
+  "valoraciones": {"A":1.0,"B":1.05,"C":0.95,"D":1.0,"E":1.0},
+  "alternativas_obligatorias": {
+    "Referencia":{"asignacion":{"persona_1":["A","B"],"persona_2":["C","E"],"persona_3":["D","prueba_automatica"]},"inversion_eur":0,"recurrente_eur_turno":0},
+    "A_Organizador_limpieza":{"cambio":"B baja a 72 s normales","asignacion":"Sin cambio","inversion_eur":250,"recurrente_eur_turno":0},
+    "B_Cuarta_persona":{"asignacion":{"persona_1":["B"],"persona_2":["C"],"persona_3":["D","prueba_automatica"],"persona_4":["A","E"]},"inversion_eur":200,"recurrente_eur_turno":90}
+  },
+  "muestreo":{"n":300,"conteos":{"trabajo_primera_pasada":210,"retrabajo":36,"espera":39,"traslado":15},"dimensionamiento_espera":{"p":0.13,"z":1.96,"error_absoluto":0.05}},
+  "ergonomia":{"alcances_comodos_cm":[32,37,42],"distancias_contenedores_actuales_cm":[28,35,48],"propuesta_ubicacion_frecuente_cm":28,"nota":"Contenedores frecuentes dentro del alcance común más corto (32 cm), manteniendo separadas entrada, aprobados y descarte."},
+  "entradas_herramienta":{"demanda_buena":"Entero no negativo, unidades buenas esperadas por turno","minutos_netos":"Número positivo, minutos disponibles por persona","alternativa_en_foco":["REF","A","B"],"proporcion_ruta_M":"Fracción entre 0 y 1; no equivale a tasa de fallo","rendimiento_minimo":"Fracción entre 0 y 1"}
+}
